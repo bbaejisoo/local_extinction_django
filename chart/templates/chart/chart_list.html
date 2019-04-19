@@ -64,12 +64,12 @@
 			<a id="menu-close" href="#"
 				class="btn btn-danger pull-right hidden-md hidden-lg toggle"><i
 				class="fa fa-times"></i></a>
-			<li class="sidebar-brand"><a href="../"><strong>[ HOME ]</strong></a></li>
+			<li class="sidebar-brand"><a href="{% url 'intro:index' %}"><strong>[ HOME ]</strong></a></li>
 			<li><a href="#" title="About">About</a></li>
-			<li><a href="chartList.io" title="Data Charts">Data - Charts</a>
+			<li><a href="{% url 'chart:chart_list' %}" title="Data Charts">Data - Charts</a>
 			</li>
-			<li><a href="../comingsoon.html" title="Issue">Issue</a></li>
-			<li><a href="../comingsoon.html" title="Service">Service</a></li>
+			<li><a href="{% url 'intro:comingsoon' %}" title="Issue">Issue</a></li>
+			<li><a href="{% url 'intro:comingsoon' %}" title="Service">Service</a></li>
 		</ul>
 	</nav>
 	<!-- /navigation -->
@@ -126,7 +126,7 @@
                                     </div>
                                  </a>
                             </li> -->
-                            {% for chart in charts %}
+                            {% for chart in object_list %}
 						    <!-- 4번째 게시글 마다 last 클래스 적용. 줄바꿈 적용 -->
 						        {% if forloop.counter|divisibleby:4 %}
 							      <li class="last">
@@ -149,70 +149,52 @@
 							     </a>
 							</li>
                             {% endfor %}
-							<!-- <li chart-idx="6149">
-							        <a href="#">
-									<h2 class="title">
-										<span class="plus">┼</span> 세계인이 가장 사랑하는 유럽 국가는? (2017)
-									</h2> <span class="info">제공기관: 익스피디아 / 유형: clustered</span>
-									<div class="cate">World</div>
-									<div class="new right">New</div>
-									<div class="cover"
-										style="background-image: url(../images/chart/cover/default.png);"></div>
-									<div class="bg"
-										style="background-image: url(../images/chart/cover/chart_bg2.jpg);">
-										<div class="overlay-chart"></div>
-									</div>
-							</a></li>
-							<li chart-idx="6148"><a href="#">
-									<h2 class="title">
-										<span class="plus">┼</span> 세계인이 가장 사랑하는 유럽 도시는? (2017)
-									</h2> <span class="info">제공기관: 익스피디아 / 유형: clustered</span>
-									<div class="cate">World</div>
-									<div class="new right">New</div>
-									<div class="cover"
-										style="background-image: url(https://www.dataplanet.co.kr/images/common/chart/_cover/bar/default.png);"></div>
-									<div class="bg"
-										style="background-image: url('https://dplive.dataplanet.co.kr//files/chart/A8f5p/e8d98c65c0950ec7c2d8aec867610b7c.jpg');">
-										<div class="overlay-chart"></div>
-									</div>
-							</a></li>
-							<li class="last" chart-idx="6147"><a href="#">
-									<h2 class="title">
-										<span class="plus">┼</span> 한국인이 가장 사랑하는 유럽 국가는? (2017)
-									</h2> <span class="info">제공기관: 익스피디아 / 유형: clustered</span>
-									<div class="cate">Life</div>
-									<div class="new right">New</div>
-									<div class="cover"
-										style="background-image: url(https://www.dataplanet.co.kr/images/common/chart/_cover/bar/default.png);"></div>
-									<div class="bg"
-										style="background-image: url('https://dplive.dataplanet.co.kr//files/chart/r4sr8/8ef95c50058ee33f2cac634ef2417f0a.jpg');">
-										<div class="overlay-chart"></div>
-									</div>
-							</a></li>
-							<li chart-idx="6146"><a href="#">
-									<h2 class="title">
-										<span class="plus">┼</span> 한국인이 가장 사랑하는 유럽 도시는? (2017)
-									</h2> <span class="info">제공기관: 익스피디아 / 유형: clustered</span>
-									<div class="cate">Life</div>
-									<div class="new right">New</div>
-									<div class="cover"
-										style="background-image: url(https://www.dataplanet.co.kr/images/common/chart/_cover/bar/default.png);"></div>
-									<div class="bg"
-										style="background-image: url('https://dplive.dataplanet.co.kr//files/chart/M61S7/b9e0cf71a04ce51ec6a8d9c0c0fbf0fd.jpg');">
-										<div class="overlay-chart"></div>
-									</div>
-							</a></li> -->
 
 						</ul>
 						<div class="clear"></div>
-						<div class="options white">
-							<div class="pagination">
-								<a href="#" class="active ">1</a> <a href="#" class="">2</a> <a
-									href="#" class="">3</a> <a href="#" class="">4</a> <a href="#"
-									class="">5</a> <a href="#" class="">6</a> <a href="#" class="">7</a>
-								<a href="#" class="">8</a> <a href="#" class="">9</a> <a
-									href="#" class="last">10</a> <a href="#" class="next"> ▶ </a>
-							</div>
+						{% comment %} <div class="options white"> {% endcomment %}
+
+                        <div class="options white">
+
+							<!-- Pagination -->
+                            {% if is_paginated %}
+                                <nav>
+                                    <ul class="pagination justify-content-center" style="margin:20px 0">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" style='margin-right:unset;'>
+                                            <span>Prev</span>
+                                        </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="disabled page-item">
+                                        <a class="page-link" href="#" style='margin-right:unset;'>
+                                            <span>Prev</span>
+                                        </a>
+                                        </li>
+                                    {% endif %}
+                                    
+                                    {% for page in page_range %}
+                                        <li {% if page == page_obj.number %} class="active page-item" {% endif %}>
+                                        <a class="page-link" href="?page={{ page }}" style='margin-right:unset;'>{{ page }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" style='margin-right:unset;'>
+                                            <span>Next</span>
+                                        </a>
+                                        </li>
+                                    {% else %}
+                                        <li {% if not page_obj.has_next %}class="disabled page-item"{% endif %}>
+                                        <a class="page-link" href="#" style='margin-right:unset;'>
+                                            <span>Next</span>
+                                        </a>
+                                        </li>
+                                    {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif %}
 							<div class="clear"></div>
 						</div>
 						<div class="clear"></div>

@@ -120,10 +120,10 @@
                             <a class="menu__item-link" href="#">About</a>
                         </li>
                         <li class="menu__item">
-                            <a class="menu__item-link" href="chart/chartList.io">Data - Charts</a>
+                            <a class="menu__item-link" href="{% url 'chart:chart_list' %}">Data - Charts</a>
                         </li>
-                        <li class="menu__item"><a class="menu__item-link" href="comingsoon.html">Issue</a></li>
-                        <li class="menu__item"><a class="menu__item-link" href="comingsoon.html">Service</a></li>
+                        <li class="menu__item"><a class="menu__item-link" href="{% url 'intro:comingsoon' %}">Issue</a></li>
+                        <li class="menu__item"><a class="menu__item-link" href="{% url 'intro:comingsoon' %}">Service</a></li>
                     </ul>
                     <div class="menu__toggle">
                         <span class="menu__toggle-inner menu__toggle-inner--open">
@@ -199,7 +199,7 @@
 						<div class="section__more-inner section__more-inner--bg1">
 							<span class="section__more-text">Want to know more?</span>
 							
-							<a href="chart/chartDetail.io?chart_id=pop_move" class="section__more-link">
+							<a href="{% url 'chart:chart_detail' id='pop_move' %}" class="section__more-link">
                                 <span class="section__more-linktext">자세히 보기</span>
                                 <svg class="icon icon--arrowlong"><use xlink:href="#icon-arrowlong"></use></svg>
                             </a>
@@ -259,7 +259,7 @@
 					<div class="section__more">
 						<div class="section__more-inner section__more-inner--bg2">
 							<span class="section__more-text">Want to know more?</span>
-							<a href="chart/chartDetail.io?chart_id=sm_whole" class="section__more-link">
+							<a href="{% url 'chart:chart_detail' id='sm_whole' %}" class="section__more-link">
 								<span class="section__more-linktext">자세히 보기</span>
 								<svg class="icon icon--arrowlong"><use xlink:href="#icon-arrowlong"></use></svg>
 							</a>
@@ -310,7 +310,7 @@
 					<div class="section__more">
 						<div class="section__more-inner section__more-inner--bg3">
 							<span class="section__more-text">Want to know more?</span>
-							<a href="chart/chartDetail.io?chart_id=sm_total" class="section__more-link">
+							<a href="{% url 'chart:chart_detail' id='sm_total' %}" class="section__more-link">
 								<span class="section__more-linktext">자세히 보기</span>
 								<svg class="icon icon--arrowlong"><use xlink:href="#icon-arrowlong"></use></svg>
 							</a>
@@ -356,7 +356,7 @@
 					<div class="section__more">
 						<div class="section__more-inner section__more-inner--bg4">
 							<span class="section__more-text">Want to know more?</span>
-							<a href="chart/chartDetail.io?chart_id=fi_total" class="section__more-link">
+							<a href="{% url 'chart:chart_detail' id='fi_total' %}" class="section__more-link">
 								<span class="section__more-linktext">자세히 보기</span>
 								<svg class="icon icon--arrowlong"><use xlink:href="#icon-arrowlong"></use></svg>
 							</a>

@@ -54,19 +54,19 @@
     <ul class="sidebar-nav">
         <a id="menu-close" href="#" class="btn btn-danger pull-right hidden-md hidden-lg toggle"><i class="fa fa-times"></i></a>
         <li class="sidebar-brand">
-            <a href="../"><strong>[ HOME ]</strong></a>
+            <a href="{% url 'intro:index' %}"><strong>[ HOME ]</strong></a>
         </li>
         <li>
             <a href="#" title="About">About</a>
         </li>
         <li>
-            <a href="chartList.io" title="Data Charts">Data - Charts</a>
+            <a href="{% url 'chart:chart_list' %}" title="Data Charts">Data - Charts</a>
         </li>
         <li>
-            <a href="../comingsoon.html" title="Issue">Issue</a>
+            <a href="{% url 'intro:comingsoon' %}" title="Issue">Issue</a>
         </li>
         <li>
-            <a href="../comingsoon.html" title="Service">Service</a>
+            <a href="{% url 'intro:comingsoon' %}" title="Service">Service</a>
         </li>
     </ul>
 </nav>
@@ -138,21 +138,10 @@
                         onclick="history.back()" style="width:200px; margin-bottom:50px; margin-right:10px; font-size:16px; border-radius:4px;"/>
 			             -->
 			            <!-- 모달 연결 -->
-		                 <c:if test="${chart.chart_id eq 'sm_gumi' || chart.chart_id eq 'sm_total' 
-		                 || chart.chart_id eq 'sm_guri' || chart.chart_id eq 'sm_hanam'}">
+                         {% if chart.chart_id == 'sm_gumi' or chart.chart_id == 'sm_total' or chart.chart_id == 'sm_guri' or chart.chart_id == 'sm_hanam' %}
 		                  <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal" 
 		                  style="width:200px; margin-bottom:50px; margin-right:10px; font-size:16px; border-radius:4px;">관련기사</button>
-		                 </c:if>
-		                 <%-- 
-		                 <c:if test="${chart.chart_id eq 'sm_guri'}">
-		                  <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal" 
-		                  style="width:200px; margin-bottom:50px; margin-right:10px; font-size:16px; border-radius:4px;">관련기사</button>
-		                 </c:if>
-		                 <c:if test="${chart.chart_id eq 'sm_hanam'}">
-		                  <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal" 
-		                  style="width:200px; margin-bottom:50px; margin-right:10px; font-size:16px; border-radius:4px;">관련기사</button>
-		                 </c:if>
-			             --%>
+                         {% endif %}
 	               </div>
 	            </div>
             </div>
@@ -170,29 +159,27 @@
         <div class="modal-content">
             <!-- 모달 Header -->
             <div class="modal-header">
-                ${chart.chart_title}
+                {{chart.title}}
                 <button class="close" data-dismiss="modal">&times;</button>
             </div>
             
             <!-- 모달 Body -->
             <div class="modal-body">
-                <c:if test="${chart.chart_id eq 'sm_gumi'}">
-	                <img src="../data/images/gumi_issue.png" style="width:800px;height:auto">
-                </c:if>
+                {% if chart.chart_id == 'sm_gumi' %}
+	                <img src="{% static 'data/images/gumi_issue.png' %}" style="width:800px;height:auto">
+                {% endif %}
+
+                {% if chart.chart_id == 'sm_guri' %}
+                    <img src="{% static 'data/images/guri_issue.png' %}" style="width:800px;height:auto">
+                {% endif %}
                 
-                <c:if test="${chart.chart_id eq 'sm_guri'}">
-                    <img src="../data/images/guri_issue.png" style="width:800px;height:auto">
-                </c:if>
+                {% if chart.chart_id == 'sm_hanam' %}
+                    <img src="{% static 'data/images/hanam_issue.png' %}" style="width:800px;height:auto">
+                {% endif %}
                 
-                <c:if test="${chart.chart_id eq 'sm_hanam'}">
-                    <img src="../data/images/hanam_issue.png" style="width:800px;height:auto">
-                </c:if>
-                
-                <c:if test="${chart.chart_id eq 'sm_total'}">
-                    <img src="../data/images/extinction_issue.png" style="width:800px;height:auto">
-                </c:if>
-                
-                
+                {% if chart.chart_id == 'sm_total' %}
+                    <img src="{% static 'data/images/extinction_issue.png' %}" style="width:800px;height:auto">
+                {% endif %}
                 <!-- 
                 <img src="images/city_sum.png" id="imagepreview"
                     style="width: 400px; height: 200px;">
@@ -221,10 +208,10 @@
     </footer>
 </section>
 
-<script src="../js/common/slick.min.js"></script>
-<script src="../js/common/magnific-popup.min.js"></script>
-<script src="../js/common/wow.min.js"></script>
-<script src="../js/common/particles.min.js"></script>
-<script src="../js/user/script.js"></script>
+<script src="{% static 'js/common/slick.min.js' %}"></script>
+<script src="{% static 'js/common/magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/common/wow.min.js' %}"></script>
+<script src="{% static 'js/common/particles.min.js' %}"></script>
+<script src="{% static 'js/user/script.js' %}"></script>
 </body>
 </html>
